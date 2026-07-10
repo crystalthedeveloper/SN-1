@@ -81,6 +81,8 @@ const shoes = Array.from({ length: 32 }, (_, index) => {
 const reduceMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
 function getPageSize() {
+  if (window.matchMedia?.('(max-width: 520px)').matches) return 1;
+  if (window.matchMedia?.('(max-width: 860px)').matches) return 2;
   return 10;
 }
 
@@ -559,7 +561,9 @@ function App() {
   const viewportRef = useRef(null);
   const filterShellRef = useRef(null);
   const isDraggingShoe = useRef(false);
+  const lastShoeInteractionAt = useRef(0);
   const wheelLock = useRef(false);
+  const swipeRef = useRef({ active: false, startX: 0, startY: 0 });
   const snapTimer = useRef(null);
   const pageSize = usePageSize();
   const [selectedShoe, setSelectedShoe] = useState(null);
@@ -649,6 +653,12 @@ function App() {
   }, [filters, measureCells]);
 
   useEffect(() => {
+    setCurrentPage(0);
+    setLoadedGroups(1);
+    requestAnimationFrame(measureCells);
+  }, [pageSize, measureCells]);
+
+  useEffect(() => {
     if (!loadedShoes.length) {
       setSelectedShoeId(null);
       return;
@@ -678,6 +688,53 @@ function App() {
     viewport.addEventListener('wheel', handleWheel, { passive: false });
     return () => viewport.removeEventListener('wheel', handleWheel);
   }, [navigateBy]);
+
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) return undefined;
+
+    const handlePointerDown = (event) => {
+      if (
+        selectedShoe ||
+        event.target.closest('button, .filter-shell, .product-panel, .movement-control, .selection-dot')
+      ) {
+        return;
+      }
+
+      swipeRef.current = {
+        active: true,
+        startX: event.clientX,
+        startY: event.clientY
+      };
+    };
+
+    const handlePointerUp = (event) => {
+      const swipe = swipeRef.current;
+      if (!swipe.active) return;
+      swipeRef.current.active = false;
+
+      if (isDraggingShoe.current || performance.now() - lastShoeInteractionAt.current < 140) return;
+
+      const dx = event.clientX - swipe.startX;
+      const dy = event.clientY - swipe.startY;
+      if (Math.abs(dx) > 46 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+        navigateBy(dx < 0 ? 1 : -1);
+      }
+    };
+
+    const handlePointerCancel = () => {
+      swipeRef.current.active = false;
+    };
+
+    viewport.addEventListener('pointerdown', handlePointerDown);
+    viewport.addEventListener('pointerup', handlePointerUp);
+    viewport.addEventListener('pointercancel', handlePointerCancel);
+    return () => {
+      viewport.removeEventListener('pointerdown', handlePointerDown);
+      viewport.removeEventListener('pointerup', handlePointerUp);
+      viewport.removeEventListener('pointercancel', handlePointerCancel);
+    };
+  }, [navigateBy, selectedShoe]);
 
   useEffect(() => {
     const handleKey = (event) => {
@@ -775,6 +832,7 @@ function App() {
             onSelect={selectShoe}
             onInteractionChange={(active) => {
               isDraggingShoe.current = active;
+              if (!active) lastShoeInteractionAt.current = performance.now();
             }}
             onFocusShoe={setActiveShoeId}
             controlInput={controlInput}
