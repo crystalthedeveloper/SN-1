@@ -1,5 +1,5 @@
 :root {
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   color: #f8f8f8;
   background: #070707;
   font-synthesis: none;
@@ -88,9 +88,10 @@ a {
   height: 38px;
   border: 1px solid rgba(229, 9, 20, 0.72);
   color: #e50914;
-  font-size: 0.92rem;
-  font-weight: 900;
-  letter-spacing: 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: normal;
 }
 
 .nav-button {
@@ -98,13 +99,14 @@ a {
 }
 
 .nav-button {
-  height: 38px;
+  height: 40px;
   padding: 0 18px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   background: rgba(255, 255, 255, 0.06);
   color: #ffffff;
-  font-size: 0.86rem;
-  font-weight: 900;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .nav-button:hover {
@@ -136,14 +138,15 @@ a {
   align-items: center;
   justify-content: center;
   gap: 5px;
-  height: 34px;
-  padding: 0;
+  height: 40px;
+  padding: 0 12px;
   border: 0;
   background: transparent;
   color: rgba(255, 255, 255, 0.78);
-  font-size: 0.78rem;
-  font-weight: 900;
-  letter-spacing: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: normal;
   white-space: nowrap;
 }
 
@@ -166,13 +169,13 @@ a {
   padding: 0 5px;
   background: #e50914;
   color: #070707;
-  font-size: 0.64rem;
-  font-weight: 900;
+  font-size: 11px;
+  font-weight: 700;
 }
 
 .filter-arrow {
   color: #e50914;
-  font-size: 0.86rem;
+  font-size: 14px;
   transform: translateY(-1px);
 }
 
@@ -200,11 +203,12 @@ a {
   display: flex;
   align-items: center;
   gap: 9px;
-  min-height: 34px;
-  padding: 7px 8px;
+  min-height: 40px;
+  padding: 8px 12px;
   color: rgba(255, 255, 255, 0.78);
-  font-size: 0.78rem;
-  font-weight: 800;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
   cursor: pointer;
 }
 
@@ -261,12 +265,12 @@ a {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   grid-template-rows: repeat(2, minmax(0, clamp(246px, 32dvh, 300px)));
-  align-content: start;
+  align-content: center;
   flex: 0 0 100%;
   gap: clamp(8px, 1vw, 16px);
   width: 100%;
   height: var(--snap-page-height);
-  padding: 14px 0 96px;
+  padding: 10px 0 118px;
   pointer-events: none;
 }
 
@@ -313,6 +317,59 @@ a {
   pointer-events: none;
 }
 
+.cart-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.cart-button {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(5, 5, 5, 0.7);
+  color: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.28);
+  cursor: pointer;
+  pointer-events: auto;
+  touch-action: manipulation;
+  transition: border-color 160ms ease, background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.cart-button:hover,
+.cart-button:focus-visible {
+  border-color: #e50914;
+  background: #e50914;
+  color: #070707;
+  transform: translateY(-2px) scale(1.04);
+}
+
+.cart-button:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.cart-button svg {
+  width: 16px;
+  height: 16px;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cart-button svg circle {
+  fill: currentColor;
+  stroke: none;
+}
+
 .selection-dot {
   position: absolute;
   z-index: 1;
@@ -345,9 +402,9 @@ a {
   border: 1px solid rgba(229, 9, 20, 0.24);
   background: rgba(0, 0, 0, 0.56);
   color: rgba(255, 255, 255, 0.74);
-  font-size: 0.74rem;
-  font-weight: 900;
-  letter-spacing: 0.1em;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
@@ -364,8 +421,10 @@ a {
 .no-results h2 {
   margin: 0;
   color: #ffffff;
-  font-size: clamp(2rem, 5vw, 4rem);
-  letter-spacing: 0;
+  font-size: clamp(28px, 4vw, 36px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: normal;
 }
 
 .no-results button {
@@ -375,35 +434,64 @@ a {
   border: 1px solid rgba(229, 9, 20, 0.38);
   background: rgba(229, 9, 20, 0.1);
   color: #e50914;
-  font-size: 0.82rem;
-  font-weight: 900;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.collection-footer {
+  position: absolute;
+  right: 18px;
+  bottom: calc(44px + env(safe-area-inset-bottom));
+  left: 18px;
+  z-index: 7;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+  min-height: 48px;
+  pointer-events: none;
 }
 
 .gallery-controls {
-  position: absolute;
+  position: static;
   right: 18px;
-  bottom: calc(70px + env(safe-area-inset-bottom));
-  z-index: 4;
+  z-index: auto;
   display: flex;
   align-items: center;
+  justify-self: end;
   gap: 10px;
   pointer-events: auto;
 }
 
 .movement-control {
-  position: absolute;
-  bottom: calc(70px + env(safe-area-inset-bottom));
-  left: 18px;
-  z-index: 4;
+  position: static;
+  z-index: auto;
   display: flex;
   align-items: center;
   gap: 10px;
   color: rgba(255, 255, 255, 0.72);
-  font-size: 0.72rem;
-  font-weight: 900;
-  letter-spacing: 0.06em;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   pointer-events: auto;
+}
+
+.copyright {
+  position: static;
+  z-index: auto;
+  justify-self: center;
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.25;
+  pointer-events: none;
+}
+
+.rotate-label-mobile {
+  display: none;
 }
 
 .joystick {
@@ -452,8 +540,8 @@ a {
 
 .joy-arrow {
   color: rgba(255, 255, 255, 0.56);
-  font-size: 0.72rem;
-  font-weight: 900;
+  font-size: 12px;
+  font-weight: 700;
   line-height: 1;
 }
 
@@ -487,18 +575,19 @@ a {
 
 .gallery-controls button,
 .gallery-controls span {
-  height: 34px;
+  height: 40px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: rgba(0, 0, 0, 0.46);
   color: rgba(255, 255, 255, 0.74);
-  font-size: 0.72rem;
-  font-weight: 900;
-  letter-spacing: 0.06em;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .gallery-controls button {
-  padding: 0 12px;
+  padding: 0 16px;
+  font-size: 13px;
 }
 
 .gallery-controls button:disabled {
@@ -509,8 +598,9 @@ a {
 .gallery-controls span {
   display: inline-flex;
   align-items: center;
-  padding: 0 10px;
+  padding: 0 14px;
   color: #e50914;
+  font-size: 14px;
 }
 
 .panel-shell {
@@ -551,32 +641,35 @@ a {
   display: inline-block;
   margin-top: 34px;
   color: #e50914;
-  font-size: 0.74rem;
-  font-weight: 900;
-  letter-spacing: 0.12em;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .product-panel h2 {
   margin: 16px 0 0;
   color: #ffffff;
-  font-size: clamp(2.1rem, 8vw, 3.35rem);
-  line-height: 0.95;
-  letter-spacing: 0;
+  font-size: clamp(32px, 3.2vw, 36px);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: normal;
 }
 
 .modal-price {
   margin: 18px 0 0;
   color: #e50914;
-  font-size: 1.45rem;
-  font-weight: 900;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .modal-copy {
   margin: 22px 0 0;
   color: rgba(255, 255, 255, 0.72);
-  font-size: 1rem;
-  line-height: 1.7;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.55;
 }
 
 .size-list {
@@ -591,7 +684,10 @@ a {
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: rgba(255, 255, 255, 0.055);
   color: #ffffff;
-  font-weight: 900;
+  padding: 0 14px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
 }
 
 .size-list button:hover {
@@ -607,9 +703,11 @@ a {
 
 .button {
   min-width: 144px;
-  height: 48px;
-  padding: 0 22px;
-  font-weight: 900;
+  height: 44px;
+  padding: 0 18px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
   transition: transform 180ms ease, background 180ms ease, color 180ms ease, border-color 180ms ease;
 }
 
@@ -656,7 +754,7 @@ a {
   .filter-trigger,
   .clear-filters {
     padding: 0 8px;
-    font-size: 0.68rem;
+    font-size: 14px;
   }
 
   .product-grid {
@@ -714,7 +812,9 @@ a {
 
   .drawer-header strong {
     color: #ffffff;
-    font-size: 1.08rem;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.2;
   }
 
   .drawer-header button {
@@ -736,9 +836,10 @@ a {
   .filter-section h3 {
     margin: 0 0 8px;
     color: #e50914;
-    font-size: 0.72rem;
-    font-weight: 900;
-    letter-spacing: 0.1em;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
   }
 
@@ -750,11 +851,14 @@ a {
 
   .drawer-actions button {
     flex: 1;
-    height: 42px;
+    height: 40px;
+    padding: 0 16px;
     border: 1px solid rgba(255, 255, 255, 0.16);
     background: rgba(255, 255, 255, 0.06);
     color: #ffffff;
-    font-weight: 900;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
   }
 
   .drawer-actions button:last-child {
@@ -775,17 +879,17 @@ a {
   .product-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: minmax(0, 1fr);
-    align-content: stretch;
+    align-content: center;
     gap: 14px;
-    padding: 12px 0 104px;
+    padding: 12px 0 118px;
   }
 }
 
 @media (max-width: 620px) {
   .nav-button {
-    height: 34px;
+    height: 38px;
     padding: 0 12px;
-    font-size: 0.78rem;
+    font-size: 13px;
   }
 
   .brand {
@@ -798,7 +902,7 @@ a {
   }
 
   .mobile-filter-button {
-    font-size: 0.72rem;
+    font-size: 13px;
   }
 
   .grid-viewport {
@@ -809,41 +913,55 @@ a {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: minmax(0, 1fr);
     gap: 10px;
-    padding: 8px 0 100px;
+    padding: 8px 0 112px;
   }
 
   .movement-control {
+    gap: 0;
+  }
+
+  .movement-control .joystick,
+  .rotate-label-desktop {
     display: none;
   }
 
-  .rotate-hint {
-    position: absolute;
-    bottom: calc(58px + env(safe-area-inset-bottom));
-    left: 10px;
-    z-index: 4;
+  .rotate-label-mobile {
     display: block;
-    height: 30px;
-    padding: 8px 10px;
-    border: 1px solid rgba(229, 9, 20, 0.24);
-    background: rgba(0, 0, 0, 0.44);
-    color: rgba(255, 255, 255, 0.68);
-    font-size: 0.64rem;
-    font-weight: 900;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    pointer-events: none;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 12px;
+  }
+
+  .collection-footer {
+    right: 10px;
+    bottom: calc(44px + env(safe-area-inset-bottom));
+    left: 10px;
+    grid-template-columns: minmax(74px, 1fr) auto minmax(0, 1fr);
+    gap: 8px;
+    min-height: 30px;
   }
 
   .gallery-controls {
-    right: 10px;
-    bottom: calc(58px + env(safe-area-inset-bottom));
     gap: 6px;
+  }
+
+  .copyright {
+    font-size: 11px;
+    text-align: center;
   }
 
   .gallery-controls button,
   .gallery-controls span {
-    height: 30px;
-    font-size: 0.64rem;
+    height: 36px;
+  }
+
+  .gallery-controls button {
+    padding: 0 12px;
+    font-size: 12px;
+  }
+
+  .gallery-controls span {
+    padding: 0 10px;
+    font-size: 13px;
   }
 
   .panel-shell {
@@ -865,7 +983,7 @@ a {
   }
 
   .product-panel h2 {
-    font-size: clamp(2rem, 11vw, 3rem);
+    font-size: clamp(28px, 8vw, 32px);
   }
 
   .panel-actions {
@@ -876,14 +994,55 @@ a {
     flex: 1 1 136px;
     min-width: 0;
     padding: 0 14px;
-    font-size: 0.86rem;
+    font-size: 13px;
+  }
+
+  .modal-price {
+    font-size: 20px;
+  }
+
+  .modal-copy {
+    font-size: 15px;
+  }
+
+  .size-list button {
+    font-size: 13px;
   }
 }
 
 @media (max-width: 520px) {
   .product-grid {
     grid-template-columns: 1fr;
-    gap: 0;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding-top: 4px;
+    padding-bottom: 106px;
+  }
+
+  .product-cell::after {
+    bottom: 6px;
+  }
+
+  .collection-footer {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      "rotate copyright"
+      "gallery gallery";
+    row-gap: 8px;
+  }
+
+  .movement-control {
+    grid-area: rotate;
+  }
+
+  .copyright {
+    grid-area: copyright;
+    justify-self: end;
+  }
+
+  .gallery-controls {
+    grid-area: gallery;
+    justify-self: end;
   }
 }
 

@@ -81,7 +81,7 @@ const shoes = Array.from({ length: 32 }, (_, index) => {
 const reduceMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
 function getPageSize() {
-  if (window.matchMedia?.('(max-width: 520px)').matches) return 1;
+  if (window.matchMedia?.('(max-width: 520px)').matches) return 2;
   if (window.matchMedia?.('(max-width: 860px)').matches) return 2;
   return 10;
 }
@@ -397,7 +397,7 @@ function ElementShoe({ shoe, layout, onSelect, onInteractionChange, onFocusShoe,
         onInteractionChange(false);
         if (!wasDrag) {
           onFocusShoe(shoe.id);
-          onSelect(shoe, true);
+          onSelect(shoe, false);
         }
       }}
       onClick={(event) => event.stopPropagation()}
@@ -503,6 +503,42 @@ function SelectionDots({ shoesToRender, layouts, visibleIds, selectedShoeId, onS
   );
 }
 
+function CartButtons({ shoesToRender, layouts, visibleIds, onSelect }) {
+  return (
+    <div className="cart-layer" aria-label="Product purchase shortcuts">
+      {shoesToRender
+        .filter((shoe) => visibleIds.has(shoe.id) && layouts.has(shoe.id))
+        .map((shoe) => {
+          const layout = layouts.get(shoe.id);
+          return (
+            <button
+              key={shoe.id}
+              className="cart-button"
+              type="button"
+              style={{ left: layout.x + layout.width - 48, top: layout.y + layout.height - 48 }}
+              aria-label={`Buy ${shoe.name}`}
+              onPointerDown={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+              }}
+              onClick={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                onSelect(shoe, true);
+              }}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 4h2l2.1 9.1a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 1.9-1.4L20 8H7" />
+                <circle cx="9.5" cy="19" r="1.25" />
+                <circle cx="17" cy="19" r="1.25" />
+              </svg>
+            </button>
+          );
+        })}
+    </div>
+  );
+}
+
 function MovementControl({ targetShoeId, onRotateStart, onRotate, onRotateEnd }) {
   const drag = useRef({ active: false, lastX: 0, lastY: 0 });
 
@@ -552,7 +588,8 @@ function MovementControl({ targetShoeId, onRotateStart, onRotate, onRotateEnd })
         <span className="joy-arrow joy-arrow-down">↓</span>
         <span className="joy-arrow joy-arrow-left">←</span>
       </button>
-      <span>Drag to Rotate</span>
+      <span className="rotate-label rotate-label-desktop">Drag to Rotate</span>
+      <span className="rotate-label rotate-label-mobile">Swipe to Rotate</span>
     </div>
   );
 }
@@ -845,6 +882,12 @@ function App() {
           selectedShoeId={selectedShoeId}
           onSelect={selectShoe}
         />
+        <CartButtons
+          shoesToRender={loadedShoes}
+          layouts={layouts}
+          visibleIds={visibleIds}
+          onSelect={selectShoe}
+        />
         {filteredShoes.length ? (
           <div className="snap-rail" style={{ transform: `translate3d(${-currentPage * 100}%, 0, 0)` }}>
             {pages.map((pageShoes, pageIndex) => (
@@ -867,7 +910,7 @@ function App() {
           </div>
         )}
         {filteredShoes.length > 0 && (
-          <>
+          <footer className="collection-footer">
             <MovementControl
               targetShoeId={controlTargetId}
               onRotateStart={() => {
@@ -881,13 +924,13 @@ function App() {
                 isDraggingShoe.current = false;
               }}
             />
-            <div className="rotate-hint">Swipe to Rotate</div>
+            <small className="copyright">© 2026 Crystal The Developer Inc.</small>
             <div className="gallery-controls" aria-label="Gallery navigation">
               <button onClick={() => navigateBy(-1)} disabled={currentPage === 0}>Prev</button>
               <span>{currentPage + 1} / {maxAvailablePage + 1}</span>
               <button onClick={() => navigateBy(1)} disabled={currentPage >= maxAvailablePage}>Next</button>
             </div>
-          </>
+          </footer>
         )}
         {isLoading && <div className="loading-indicator">Preparing next drop</div>}
       </section>

@@ -7,14 +7,17 @@ SN-1 is a one-page 3D sneaker shopping template for online shoe sellers, Instagr
 - Shared React Three Fiber canvas rendering every visible product.
 - Horizontal product groups with wheel, trackpad, button, keyboard, and swipe navigation.
 - 10 visible shoes per desktop page in a compact 2-row gallery.
-- 2 visible shoes per tablet or larger mobile page, and 1 shoe per narrow phone page.
+- 2 visible shoes per mobile page, stacked vertically on narrow phones.
 - Real Shopify Materials Variants Shoe GLB with `midnight`, `beach`, and `street` material variants.
-- Drag-to-rotate directly on each shoe.
+- Hover, select, and drag-to-rotate interactions on each shoe without opening product details.
 - Selection dots for choosing the active shoe.
+- Independent cart buttons that act as the only trigger for product details and buying controls.
 - Desktop joystick control for rotating the selected shoe.
-- Mobile swipe/rotate hint and bottom-sheet product details.
+- A safe-area-aware footer grouping rotation guidance, copyright, and gallery navigation.
+- Mobile swipe/rotate guidance and bottom-sheet product details.
 - Multi-select filters for gender, sale, brand, size, color, and price.
 - Dark premium black, red, and white visual style.
+- Fast, web-safe Arial/Helvetica typography across the interface.
 
 ## Tech Stack
 
@@ -85,7 +88,7 @@ The gallery does not use vertical document scrolling. Wheel and trackpad input i
 
 - Desktop: 10 shoes per page
 - Tablet and larger mobile: 2 shoes per page
-- Narrow phones: 1 shoe per page
+- Narrow phones: 2 shoes per page in a vertical two-row layout
 
 Additional products are revealed in groups as the user advances through the gallery.
 
@@ -96,8 +99,10 @@ The app uses `100dvh`, hidden document overflow, and safe-area-aware bottom cont
 - The logo, Filters button, and Contact button stay compact.
 - The product popup becomes a bottom sheet.
 - The gallery supports swipe navigation between product groups.
-- Shoes remain large enough to drag and rotate.
-- Bottom controls are raised above phone safe areas.
+- Two shoes remain large enough to select, tap, and rotate on every page.
+- Selection dots and cart buttons remain available for both shoes.
+- The cart button is the only control that opens product details; shoe exploration never opens the popup.
+- Rotation guidance, copyright, and Prev/Page/Next controls share one footer raised above phone safe areas.
 
 ## Performance Optimizations
 
